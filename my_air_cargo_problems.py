@@ -138,7 +138,7 @@ class AirCargoProblem(Problem):
             negative_set = set(action.precond_neg)
             return set(fluents.pos).issuperset(positive_set) and set(fluents.neg).issuperset(negative_set)
 
-        return filter(possible, self.get_actions())
+        return list(filter(possible, self.get_actions()))
 
     def result(self, state: str, action: Action):
         """ Return the state that results from executing the given
