@@ -10,7 +10,7 @@ from lp_utils import (
 from my_planning_graph import PlanningGraph
 
 from functools import lru_cache
-
+from math import inf
 
 class AirCargoProblem(Problem):
     def __init__(self, cargos, planes, airports, initial: FluentState, goal: list):
@@ -191,9 +191,38 @@ class AirCargoProblem(Problem):
         carried out from the current state in order to satisfy all of the goal
         conditions by ignoring the preconditions required for an action to be
         executed.
+        (see Russell-Norvig Ed-3 10.2.3  or Russell-Norvig Ed-2 11.2)
         """
-        # TODO implement (see Russell-Norvig Ed-3 10.2.3  or Russell-Norvig Ed-2 11.2)
+
         count = 0
+        state = node.state
+        fluents = decode_state(state, self.state_map)
+        goal_expected = set(self.goal)
+        missing = goal_expected.difference(fluents.pos)
+
+        def removes_by(choice):
+            return set(choice.effect_add).intersection(missing)
+
+        possible_choices = list(filter(lambda choice: len(removes_by(choice)) > 0, self.get_actions()))
+
+        #        print("➡️Missing", missing)
+
+        while missing:
+
+            if len(possible_choices) == 0:
+                return inf
+
+            best_removes = max(map(removes_by, possible_choices), key=len)
+
+            if len(best_removes) == 0:
+                return inf
+
+            #            print("Found action for", best_removes)
+
+            missing.difference_update(best_removes)
+            count += 1
+
+#        print("🎉 Solved in", count)
         return count
 
 
