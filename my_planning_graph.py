@@ -315,7 +315,8 @@ class PlanningGraph():
             if node.prenodes.issubset(previous_level):
                 # Iterate over all of the node instances in the previous level.
                 for previous in previous_level:
-                    # node.prenodes contain nodes that compare equal, but are not the same instances as the ones in previous_level
+                    # node.prenodes contains nodes that compare equal, but are not the same instances as the ones
+                    # in previous_level – we must connect exactly instances from previous_level
                     if previous in node.prenodes:
                         # Make sure to connect an instance from previous_level with an instance in future new_level
                         node.parents.add(previous)

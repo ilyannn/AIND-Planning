@@ -128,11 +128,9 @@ class TestPlanningGraphMutex(unittest.TestCase):
                         correct += 1
                     else:
                         incorrect += 1
-                        print("Incorrect double link on level S{}".format(index))
 
-        self.assertNotEqual(correct, 0, "No nodes are correctly double linked")
-        self.assertEqual(incorrect, 0, "Some nodes are incorrectly double linked")
-
+        self.assertNotEqual(correct, 0, "At least some S-level nodes should be correctly double linked")
+        self.assertEqual(incorrect, 0, "All S-level nodes should be correctly double linked")
 
     def test_double_linked_a(self):
         correct = 0
@@ -149,10 +147,9 @@ class TestPlanningGraphMutex(unittest.TestCase):
                         correct += 1
                     else:
                         incorrect += 1
-                        print("Incorrect double link on level A{}".format(index))
 
-        self.assertNotEqual(correct, 0, "No nodes are correctly double linked")
-        self.assertEqual(incorrect, 0, "Some nodes are incorrectly double linked")
+        self.assertNotEqual(correct, 0, "At least some A-level nodes should be correctly double linked")
+        self.assertEqual(incorrect, 0, "All A-level nodes should be correctly double linked")
 
     def test_not_all_linked(self):
         for level, next_level in zip(self.pg.s_levels, self.pg.a_levels):
@@ -161,7 +158,7 @@ class TestPlanningGraphMutex(unittest.TestCase):
                     if not (maybe_parent in maybe_child.parents):
                         return
 
-        self.fail("All S-nodes are parents of all A-nodes")
+        self.fail("At least some S-nodes and A-nodes should be not linked")
 
 
 class TestPlanningGraphHeuristics(unittest.TestCase):
