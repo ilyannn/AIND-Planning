@@ -113,6 +113,47 @@ class TestPlanningGraphMutex(unittest.TestCase):
             self.pg, self.ns1, self.ns2),
             "If one parent action can achieve both states, should NOT be inconsistent-support mutex, even if parent actions are themselves mutex")
 
+    def test_double_linked_s(self):
+        correct = 0
+        incorrect = 0
+        for index, level in enumerate(self.pg.s_levels):
+            try:
+                next_level = self.pg.a_levels[index]
+            except:
+                break
+
+            for maybe_parent in level:
+                for maybe_child in next_level:
+                    if (maybe_parent in maybe_child.parents) == (maybe_child in maybe_parent.children):
+                        correct += 1
+                    else:
+                        incorrect += 1
+                        print("Incorrect double link on level S{}".format(index))
+
+        self.assertNotEqual(correct, 0, "No nodes are correctly double linked")
+        self.assertEqual(incorrect, 0, "Some nodes are incorrectly double linked")
+
+
+    def test_double_linked_a(self):
+        correct = 0
+        incorrect = 0
+        for index, level in enumerate(self.pg.a_levels):
+            try:
+                next_level = self.pg.s_levels[index+1]
+            except:
+                break
+
+            for maybe_parent in level:
+                for maybe_child in next_level:
+                    if (maybe_parent in maybe_child.parents) == (maybe_child in maybe_parent.children):
+                        correct += 1
+                    else:
+                        incorrect += 1
+                        print("Incorrect double link on level A{}".format(index))
+
+        self.assertNotEqual(correct, 0, "No nodes are correctly double linked")
+        self.assertEqual(incorrect, 0, "Some nodes are incorrectly double linked")
+
 
 class TestPlanningGraphHeuristics(unittest.TestCase):
     def setUp(self):
