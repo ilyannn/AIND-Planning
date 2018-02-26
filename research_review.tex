@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{amssymb}
+\usepackage{url}
+
+%SetFonts
+
+%SetFonts
+
+
+\title{Research Review}
+\author{Ilya Nikokoshev}
+\date{February 25, 2018}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+As part of the Project 3 in the Artificial Intelligence Nanodegree Program, we review several key developments in the field of planning and search.
+\end{abstract}
+
+
+\subsection*{PDDL, ADL and STRIPS}
+
+Planning Domain Definition Language (PDDL), developed in 1998 to enable a standardised way of representing the problems for the International Planning Competition (IPC), helped researchers to communicate their results and is one of the foundational advances in the field. 
+
+PDDL is actively evolving and the version 3.1, adding object fluents, was used for the latest IPCs \cite{PDDL, ICAPS}.
+
+The predecessors of PDDL are Action description language (ADL), developed in 1986 specifically to describe robot's actions and STRIPS (Stanford Research Institute Problem Solver, later used as an acronym for problem definition language). STRIPS, in particular, operates under a closed-world assumption, where all unmentioned literals are false, whereas ADL, in comparison, allows negative literals to be used in the definition and considers all unmentioned literals to be unknown \cite{ADL}.
+
+
+\subsection*{IPC and FD}
+
+Results of the last IPC, held in 2014, show that large improvements in planning still occur. In particular, the winners of Sequential Satisficing track of previous IPC, LAMA-11, would have been 12th out of 21, and the previous winners of In Agile track, LPG and FF would have taken places close to the bottom had it competed in 2014 \cite{IPC14}.
+
+Those results were obtained largely because a number of high-performance planners is available, such as Fast Downward \cite{IPC14, FD}.
+
+The next IPC is scheduled for 2018 \cite{IPC18}. It's interesting to see what this year will bring.
+
+
+\begin{thebibliography}{1}
+
+\bibitem{PDDL} Planning Domain Definition Language, {\em Wikipedia}, \url{https://en.wikipedia.org/wiki/Planning_Domain_Definition_Language}.
+
+\bibitem{ADL} Action description language, {\em Wikipedia}, \url{https://en.wikipedia.org/wiki/Action_description_language}.
+
+
+\bibitem{ICAPS} PDDL resources, {\em ICAPS web site}, \url{http://icaps-conference.org/ipc2008/deterministic/PddlResources.html}.
+
+\bibitem{IPC18} International Planning Competition 2018, {\em IPC 2018 web site}, \url{https://ipc2018.bitbucket.io}.
+
+\bibitem{IPC14} L. Chrpa, M. Vallati, T. L. McCluskey {\em Eighth International Planning Competition: Deterministic Part}, \url{https://helios.hud.ac.uk/scommv/IPC-14/repository/slides.pdf}
+
+\bibitem{FD} The Fast Downward Planning System, {\em arXiv: 1109.6051}, \url{http://adsabs.harvard.edu/abs/2011arXiv1109.6051H}
+
+
+
+\end{thebibliography}
+
+
+
+\end{document}  
