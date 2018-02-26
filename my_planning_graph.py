@@ -299,7 +299,7 @@ class PlanningGraph():
         :return:
             adds A nodes to the current level in self.a_levels[level]
         """
-        # TODO add action A level to the planning graph as described in the Russell-Norvig text
+        # Add action A level to the planning graph as described in the Russell-Norvig text
         # 1. determine what actions to add and create those PgNode_a objects
         # 2. connect the nodes to the previous S literal level
         # for example, the A0 level will iterate through all possible actions for the problem and add a PgNode_a to a_levels[0]
@@ -313,8 +313,11 @@ class PlanningGraph():
         for action in self.all_actions:
             node = PgNode_a(action)
             if node.prenodes.issubset(previous_level):
+                # Iterate over all of the node instances in the previous level.
                 for previous in previous_level:
+                    # node.prenodes contain nodes that compare equal, but are not the same instances as the ones in previous_level
                     if previous in node.prenodes:
+                        # Make sure to connect an instance from previous_level with an instance in future new_level
                         node.parents.add(previous)
                         previous.children.add(node)
                 new_level.add(node)
@@ -418,7 +421,7 @@ class PlanningGraph():
         :param node_a2: PgNode_a
         :return: bool
         """
-        # TODO test for Inconsistent Effects between nodes
+        # Test for Inconsistent Effects between nodes
         return not set(node_a1.action.effect_add).isdisjoint(set(node_a2.action.effect_rem)) or not set(node_a2.action.effect_add).isdisjoint(set(node_a1.action.effect_rem))
 
     def interference_mutex(self, node_a1: PgNode_a, node_a2: PgNode_a) -> bool:
@@ -453,7 +456,7 @@ class PlanningGraph():
         :return: bool
         """
 
-        # TODO test for Competing Needs between nodes
+        # Test for Competing Needs between nodes
         for precond1 in node_a1.parents:
             for precond2 in node_a2.parents:
                 if precond1.is_mutex(precond2):
@@ -493,8 +496,8 @@ class PlanningGraph():
         :param node_s2: PgNode_s
         :return: bool
         """
-        # TODO test for negation between nodes
-        return node_s1.is_pos != node_s2.is_pos and node_s1.symbol == node_s2.symbol
+        # Test for negation between nodes
+        return node_s1.symbol == node_s2.symbol and node_s1.is_pos != node_s2.is_pos
 
     def inconsistent_support_mutex(self, node_s1: PgNode_s, node_s2: PgNode_s):
         """
@@ -512,7 +515,7 @@ class PlanningGraph():
         :param node_s2: PgNode_s
         :return: bool
         """
-        # TODO test for Inconsistent Support between nodes
+        # Test for Inconsistent Support between nodes
         for action1 in node_s1.parents:
             for action2 in node_s2.parents:
                 if not action1.is_mutex(action2):
