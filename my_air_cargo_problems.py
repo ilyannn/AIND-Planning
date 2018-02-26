@@ -194,36 +194,11 @@ class AirCargoProblem(Problem):
         (see Russell-Norvig Ed-3 10.2.3  or Russell-Norvig Ed-2 11.2)
         """
 
-        count = 0
-        state = node.state
-        fluents = decode_state(state, self.state_map)
-        goal_expected = set(self.goal)
-        missing = goal_expected.difference(fluents.pos)
+        # Read all positive sentences.
+        kb = PropKB(decode_state(node.state, self.state_map).pos_sentence())
 
-        def removes_by(choice):
-            return set(choice.effect_add).intersection(missing)
-
-        possible_choices = list(filter(lambda choice: len(removes_by(choice)) > 0, self.get_actions()))
-
-        #        print("➡️Missing", missing)
-
-        while missing:
-
-            if len(possible_choices) == 0:
-                return inf
-
-            best_removes = max(map(removes_by, possible_choices), key=len)
-
-            if len(best_removes) == 0:
-                return inf
-
-            #            print("Found action for", best_removes)
-
-            missing.difference_update(best_removes)
-            count += 1
-
-#        print("🎉 Solved in", count)
-        return count
+        # Count all missing statements.
+        return len(set(self.goal).difference(kb.clauses))
 
 
 def air_cargo_p1() -> AirCargoProblem:
