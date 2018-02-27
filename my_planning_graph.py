@@ -356,10 +356,12 @@ class PlanningGraph():
                 this_node_parents.add(action)
                 node_parents[effect] = this_node_parents
 
+        # Add and double link all the found nodes.
         for node, parents in node_parents.items():
-
+            # Link child node to parents.
             node.parents = parents
             for parent in parents:
+                # Link parent node to children.
                 parent.children.add(node)
             new_level.add(node)
 
