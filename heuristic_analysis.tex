@@ -100,12 +100,15 @@ Unload(C4, P2, SFO)
 
 \section{Non-heuristic Searches}
 
-We present results for the runs of three uninformed planning strategies in the Table \ref{NonHeuristic}. The selected strategies are Breadth First Search, Uniform Cost Search and Depth First Graph Search. Those strategies do not use any additional information about the structure of the problem states.
+We present results for the runs of three uninformed planning strategies in the Table \ref{NonHeuristic}. The selected strategies are Breadth First Search (BFS), Uniform Cost Search (UCS) and Depth First Graph Search (DFGS). Those strategies do not use any additional information about the structure of the problem states.
 
-In line with the results in the Chapter 3 (all references are to the AIMA book), Breadth First Search and Uniform Cost Search always produce the optimal plan. 
+The BFS algorithm works by traversing all possible solution paths from the path of length $0$, then all of the paths of length $1$, then all the paths of length $2$ et cetera. When we find a path of length $i$ that leads to a solution, it is guaranteed that the this solution is optimal, since we have already considered and discarded all paths of length $\le i-1$.
 
-Figure 3.21 in Section 3.4.7 goes into more detail regarding the time and space complexity of selected methods. In particular, Depth First Graph Search has its own advantages as it uses less memory and is practically faster in our runs. However, the solutions it finds are typically very far from 
-optimal.
+Regarding the UCS search method, the cost of a solution path that is used to define it is implemented simply as the number of actions (to see this, note the recursive definition of \texttt{Problem.path\_cost} in \texttt{./aimacode/search.py} as the cost of the parent path $+1$ as well as the base case with cost 0). Therefore, the algorithm generally works similarly to BFS. However, UCS is defined to be able to accept any admissible cost function. This means that for our particular case the implementation will continue to expand the nodes even once it finds a path of length $i$, until it goes through all paths of this length.
+
+From this theoretical analysis follows that both BFS and UCS will find optimal solutions, and that UCS will always expand not less nodes and perform not less goal tests in comparison to BFS. On the other hand, there is no reason to think that DFGS will find solutions that are optimal. Our experimental results confirm all of these statements.
+
+Figure 3.21 in Section 3.4.7 goes into more detail regarding the time and space complexity of selected methods. In particular, Depth First Graph Search has its own advantages as it uses less memory and is practically faster in our runs. However, we see that the solutions it finds are very far from optimal.
 
 \begin{table}[ht]
 \caption{Results for Non-heuristic planinng methods}
@@ -134,7 +137,9 @@ optimal.
 
 We present results for the runs of an A* search with two heuristics, Ignore Preconditions (\hip) and Level Sum (\hpg), in the Table \ref{Heuristic}. 
 
-As proven in Section 3.5.2, A* search always finds optional solution, provided that the heuristics is consistent. This is confirmed by our results.
+As proven in Section 3.5.2, A* search always finds optional solution, provided that the heuristic is consistent. A quick proof of this statement can be obtained by noting that we only declare a solution of total cost $T$ when we will examine and reject all paths of total cost $< T$. Since total cost for a solution is equal to path cost, and total cost for a non-solution is never less than path cost, the solution we find will be optimal.
+
+This statement is confirmed by our results.
 
 The results show that using A* search with Level Sum heuristics requires less Node Expansions and Goal Tests to find optional solutions than any other method. However, this heuristic itself is computationally expensive and using Ignore Preconditions allows us to perform the search much faster in practice, dominating all other optimal methods.
 
