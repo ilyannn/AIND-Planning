@@ -136,7 +136,7 @@ We present results for the runs of an A* search with two heuristics, Ignore Prec
 
 As proven in Section 3.5.2, A* search always finds optional solution, provided that the heuristics is consistent. This is confirmed by our results.
 
-Clearly, using A* search with Level Sum heuristics requires less Node Expansions and Goal Tests to achieve optionality than any other method. However, this heuristics is computationally expensive and Ignore Preconditions performs a search much faster in practice. For problems 2 and 3 this heuristics also dominates Breadth First Search and Uniform Cost Search. The problem 1 is simple enough that it can be solved slightly faster by Breadth First Search.
+The results show that using A* search with Level Sum heuristics requires less Node Expansions and Goal Tests to find optional solutions than any other method. However, this heuristic itself is computationally expensive and using Ignore Preconditions allows us to perform the search much faster in practice, dominating all other optimal methods.
 
 \begin{table}[ht]
 \caption{Results for Heuristic planinng methods}
@@ -144,14 +144,14 @@ Clearly, using A* search with Level Sum heuristics requires less Node Expansions
 \begin{tabular}{c|c|ccccc}
    & Heuristic & Length & Optimal? & Time Elapsed & Expansions & Goal Tests\\
    \hline
-1 & \hip & 6 & Yes & 0.19 & 41 & 43 \\
-1 & \hpg & 6 & Yes & 0.68 & 11 & 13 \\
+1 & \hip & 6 & Yes & 0.10 & 41 & 43 \\
+1 & \hpg & 6 & Yes & 0.69 & 11 & 13 \\
    \hline
-2 & \hip & 9 & Yes & 31.40 & 1450 & 1452 \\
-2 & \hpg & 9 & Yes & 61.17 &  86 & 88  \\
+2 & \hip & 9 & Yes & 12.85 & 1450 & 1452 \\
+2 & \hpg & 9 & Yes & 67.36 &  86 & 88  \\
    \hline
-3 & \hip & 12 & Yes & 127.46 & 5040 & 5042 \\
-3 & \hpg & 12 & Yes & 333.36 & 325 & 327 
+3 & \hip & 12 & Yes & 59.05 & 5040 & 5042 \\
+3 & \hpg & 12 & Yes & 336.54 & 325 & 327 
 \end{tabular}
 \end{center}
 \label{Heuristic}
@@ -159,7 +159,7 @@ Clearly, using A* search with Level Sum heuristics requires less Node Expansions
 
 \section{Conclusion}
 
-We have compared five different strategies of finding a solution to Air Cargo problem. Using informed search we were able to achieve a better balance by finding an optional solution faster using A* with domain-independent Ignore Preconditions heuristic. 
+We have compared five different strategies of finding a solution to the Air Cargo problem. Using informed search we were able to achieve a good balance by finding an optional solution faster using A* search with domain-independent Ignore Preconditions heuristic. 
 
 
 \end{document}  
